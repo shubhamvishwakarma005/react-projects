@@ -1,3 +1,4 @@
+// import Features from "./Features"
 import Task from "./Task"
 
 
@@ -7,6 +8,7 @@ function App() {
     <div>
       <h1>to-do in react!</h1>
       <Task />
+      {/* <Features /> */}
     </div>
   )
 }
