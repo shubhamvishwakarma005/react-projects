@@ -1,6 +1,8 @@
 const input = document.getElementById('task-input')
 const addbtn = document.getElementById('add-task-btn')
-const tasklist = document.getElementById('task-list')
+// const tasklist = document.getElementById('task-list')
+
+const tasksList = document.getElementById('task-collect-list')
 
 
 function Task() {
@@ -17,19 +19,26 @@ function Task() {
         let checkbox = document.createElement('input');
         checkbox.type = 'checkbox'
 
-        child.textContent = `${userTask}- ${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()} `;
+    //    if(child.textContent === ""){
+    //     alert('Enter input value!')
+    //      return 
+    //    }
 
+        child.textContent = `${userTask}- ${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()} `;
+        // addition 
         parent.appendChild(checkbox);
         parent.appendChild(child);
-        tasklist.appendChild(parent);
+        tasksList.appendChild(parent);
 
         input.value = '';
 
 
+            // checkbox       
         checkbox.addEventListener('change', () => {
             if (checkbox.checked) {
                 child.style.textDecoration = 'line-through';
                 child.style.color = 'red';
+                child.style.cursor="pointer"
                 console.log('checked');
             } else {
                 child.style.textDecoration = 'none';
@@ -38,16 +47,18 @@ function Task() {
             }
         })
 
+
+            // Deletion  
         parent.addEventListener('dblclick', () => {
-            tasklist.removeChild(parent);  
+            tasksList.removeChild(parent);  
             console.log('task deleted');         
         })
 
 
         // storing in location storage  
-        let storeTask = JSON.parse(localStorage.getItem('tasks')) || [];
-        storeTask.push({ task: userTask, date: currentDate.toLocaleDateString(), time: currentDate.toLocaleTimeString() });
-        localStorage.setItem('tasks', JSON.stringify(storeTask));
+        // let storeTask = JSON.parse(localStorage.getItem('tasks')) || [];
+        // storeTask.push({ task: userTask, date: currentDate.toLocaleDateString(), time: currentDate.toLocaleTimeString() });
+        // localStorage.setItem('tasks', JSON.stringify(storeTask));
 
     })
 }

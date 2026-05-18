@@ -49,17 +49,13 @@ body{
     color: black;
     cursor: pointer;
 }
-
-.task-list{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+.task button:hover{
+    background-color: #ddd;
 }
 
-.task-list div{
+.task-list{
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    margin-top: 20px;
 }

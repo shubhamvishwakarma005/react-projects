@@ -1,81 +1,100 @@
-import  { useState } from 'react'
+import { useState } from "react"
 
 function Task() {
-const [task, setTask] = useState("")
-const [store, setStore] = useState([])
 
-// add task 
-function CreateTask(){
-  if(task === ""){
-    alert("Enter your task!")
-    return;
+  const [task, setTask] = useState("");
+  const [store, setStore] = useState([]);
+
+  // Add task 
+  function CreateTask(){
+    if(task === ""){
+      alert('Enter your Task!');
+      return
+    }
+
+    const newTask = {
+      id:Date.now(),
+      text:task,
+      completed: false
+    }
+
+    setStore([...store, newTask])
+    setTask("")
+
   }
 
-  const newTask ={
-    id:Date.now(),
-    text:task,
-    completed:false
-  }
-
-  setStore([...store, newTask])
-  setTask("")
-
-}
-
-
-  // Delete task 
+  // Delete Task 
   function DeleteTask(id){
-    const FilterTask = store.filter((items)=>(items.id !== id))
-     setStore(FilterTask)
+    const FreshTask = store.filter((item)=>(item.id !== id))
+    setStore(FreshTask)
   }
 
-
-  // Completed task 
-  function CheckedTask(id){
-    const markedTask = store.map((items)=>{
-      if(items.id === id){
+  // completed Task 
+  function CompletedTask(id){
+    const DoneTask = store.map((item)=>{
+      if(item.id === id){
         return{
-          ...items, completed:!items.completed
+          ...item,
+          completed:!item.completed
         }
       }
-      return items
+      return item
     })
 
-    setStore(markedTask)
+    setStore(DoneTask)
   }
 
+  // Edit task
+  function EditTask(id){
 
+    const newTAsk = prompt("Edit your task...")
+
+    const ReWriteTask = store.map((item)=>{
+      if(item.id === id){
+        return{
+          ...item,
+          text: newTAsk
+        }
+      }
+      return item
+    })
+    setStore(ReWriteTask)
+  }
 
   return (
     <div>
-      <input type="text" value={task} placeholder='Enter your task' onChange={(e)=>setTask(e.target.value)}/>
-      <button onClick={CreateTask}>Add task</button>
+      <input type="text"
+       value={task}
+        placeholder="Enter your task"
+         onChange={(e)=>setTask(e.target.value)}/>
 
-      <ul>
-        {store.map((item)=>(
-          <li key={item.id}>
+         <button onClick={CreateTask}>Add Task</button>
 
-            <input type="checkbox"  
-             checked={item.completed}
-             onChange={()=>CheckedTask(item.id)}
-            />
+         <div>
+          <ul>
+            {store.map((items)=>(
+              <li key={items.key}>
 
-            <span 
+              <input type="checkbox" 
+              checked={items.completed}
+              onChange={()=>CompletedTask(items.id)} 
+              />
+
+                
+                <span 
                 style={{
-                  textDecoration: item.completed ? "line-through" : "none"
-                }} 
-            >
-               {item.text}
-            </span>
+                  textDecoration:items.completed ? "line-through" : "none"
+                }}>
+                {items.text}
+                </span>
 
-            <button onClick={()=>DeleteTask(item.id)}>Delete</button>
+                 <button onClick={()=>EditTask(items.id)}>Edit Task</button>
+                <button onClick={()=>DeleteTask(items.id)}>Delete</button>
 
-            <span></span>
-
-          </li>
-        ))}
-      </ul>
-
+              </li>
+            ))}
+          </ul>
+         </div>
     </div>
   )
 }
